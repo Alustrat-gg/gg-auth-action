@@ -1,2 +1,2 @@
 # gg-auth-action
-Action used to retrieve a GitGuardian API Token using GitHub OIDC
+The action uses the GitHub OIDC token to ask GitGuardian to generate a short-life token. It then saves it inside the job GitHub environment variables so it can be used in the following job's steps.
