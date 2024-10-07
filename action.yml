@@ -1,0 +1,6 @@
+---
+name: gg-auth
+description: Use GitHub OIDC token to fetch a GitGuardian API token
+runs:
+  using: docker
+  image: Dockerfile

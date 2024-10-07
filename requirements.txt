@@ -1,0 +1,3 @@
+requests
+# NOTE: Used to detect an ambient OIDC credential,
+id ~= 1.0

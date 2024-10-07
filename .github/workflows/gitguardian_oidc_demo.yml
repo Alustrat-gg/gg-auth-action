@@ -1,0 +1,29 @@
+name: GitGuardian OIDC Demo
+run-name: Testing the OIDC auth of GitGuardian 🚀
+on: [push]
+jobs:
+  scanning:
+    name: GitGuardian scan
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required to create an OIDC token
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # fetch all history so multiple commits can be scanned
+
+      - name: Fetch GG token
+        uses: ./
+        env:
+          GITGUARDIAN_INSTANCE: https://api-14778.review-apps.gitguardian.tech
+
+      - name: GitGuardian scan
+        uses: GitGuardian/ggshield/actions/secret@v1.32.0
+        env:
+          GITHUB_PUSH_BEFORE_SHA: ${{ github.event.before }}
+          GITHUB_PUSH_BASE_SHA: ${{ github.event.base }}
+          GITHUB_PULL_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GITGUARDIAN_INSTANCE: https://api-14778.review-apps.gitguardian.tech
+          GITGUARDIAN_API_KEY: ${{ env.GITGUARDIAN_API_KEY }}
